@@ -1,6 +1,6 @@
 #
 # Cookbook Name::       redis
-# Description::         default
+# Description::         default recipe
 # Recipe::              default
 # Author::              Scott M. Likens (<scott@likens.us>)
 #
@@ -18,3 +18,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+redis_development_install "redis" do
+  version "2.6.12"
+  action :tarball
+end
+redis_development_conf "redis_conf" do
+  action :create
+end
+directory "/var/lib/redis" do
+  action :create
+  recursive true
+end
+include_recipe 'runit'
+runit_service "redis_server" do
+  options({
+            "user" => "root",
+            "filename" => "/etc/redis.conf",
+            "data_dir" => "/var/lib/redis"
+          })
+end

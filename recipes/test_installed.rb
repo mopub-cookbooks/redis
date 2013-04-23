@@ -1,10 +1,10 @@
 #
 # Cookbook Name::       redis
-# Description::         Install From Ubuntu Package -- easy but lags in version
-# Recipe::              install_from_package
-# Author::              Benjamin Black
+# Description::         default recipe
+# Recipe::              default
+# Author::              Scott M. Likens (<scott@likens.us>)
 #
-# Copyright 2011, Benjamin Black
+# Copyright 2012, Scott M. Likens
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +19,7 @@
 # limitations under the License.
 #
 
-unless node[:platform_version].to_f < 9.0
-  package "redis-server" do
-    action :install
-  end
+redis_development_install "redis" do
+  version "2.6.12"
+  action :tarball
 end
